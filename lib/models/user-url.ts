@@ -19,6 +19,6 @@ const userUrlSchema = new mongoose.Schema({
 });
 
 
-const UserUrl = mongoose.models?.userurl || mongoose.model('userurl', userUrlSchema);
+const UserUrl = mongoose?.models?.userurl || mongoose.model('userurl', userUrlSchema);
 
 export default UserUrl;
