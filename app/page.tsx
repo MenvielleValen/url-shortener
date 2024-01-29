@@ -4,10 +4,7 @@ import { IoIosLink } from "react-icons/io";
 import { authOptions } from "./utils/auth";
 
 export default async function Home() {
-
   const session = await getServerSession(authOptions);
-
-  console.log(session)
 
   return (
     <section className="flex flex-col gap-4 md:w-1/4 mx-auto h-[100vh] items-center justify-center">

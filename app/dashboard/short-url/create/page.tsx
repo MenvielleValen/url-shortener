@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../utils/auth";
+import { authOptions } from "../../../utils/auth";
 import { redirect } from "next/navigation";
 import { FormLink } from "@/components/Forms/FormLink";
 import { ButtonLink } from "@/components/ButtonLink";
@@ -19,7 +19,7 @@ export default async function CreatePage() {
       </div>
       <hr className="opacity-55"/>
       <div className="flex  p-2  h-[100vh]">
-        <FormLink user={session?.user || null} />
+        <FormLink user={session?.user || null} link={null}/>
       </div>
     </>
   );

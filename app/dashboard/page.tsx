@@ -3,7 +3,6 @@ import { authOptions } from "../utils/auth";
 import { redirect } from "next/navigation";
 import { CardShortUrl } from "@/components/CardShortUrl";
 import { findUserUrls } from "@/lib/actions/userUrl.actions";
-import { Button } from "@/components/Button";
 import { ButtonLink } from "@/components/ButtonLink";
 
 export default async function DashboardPage() {
@@ -23,7 +22,7 @@ export default async function DashboardPage() {
     <>
       <div className="flex justify-between items-center">
         <h2 className="text-white text-2xl mt-3 font-bold">Dashboard</h2>
-        <ButtonLink href={'/dashboard/create'}>Create new link</ButtonLink>
+        <ButtonLink href={'/dashboard/short-url/create'}>Create new link</ButtonLink>
       </div>
       <hr className="opacity-55"/>
       <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

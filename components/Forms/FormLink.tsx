@@ -28,9 +28,19 @@ interface FormLinkProps {
     email?: string | null | undefined;
     image?: string | null | undefined;
   } | null;
+  link: {
+    id: string;
+    userEmail: string;
+    url: {
+      id: string;
+      shortUrl: string;
+      longUrl: string;
+    }
+    description?: string;
+  } | null
 }
 
-export const FormLink = ({ user }: FormLinkProps) => {
+export const FormLink = ({ user, link}: FormLinkProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -39,14 +49,25 @@ export const FormLink = ({ user }: FormLinkProps) => {
   const form = useForm<z.infer<typeof UrlSchema>>({
     resolver: zodResolver(UrlSchema),
     defaultValues: {
-      longUrl: "",
-      shortUrl: "",
-      description: "",
+      longUrl: link?.url.longUrl || "",
+      shortUrl: link?.url.shortUrl || "",
+      description: link?.description || "",
       userEmail: user?.email || "",
     },
   });
 
-  const onSubmit = async ({
+  const onSubmit = async (values: z.infer<typeof UrlSchema>) => {
+
+    if(link !== null){
+
+    }
+    else{
+      newShortUrl(values);
+    }
+    
+  };
+
+  const newShortUrl = async ({
     longUrl,
     shortUrl,
     description,
@@ -107,6 +128,7 @@ export const FormLink = ({ user }: FormLinkProps) => {
         <FormField
           control={form.control}
           name="shortUrl"
+          disabled={link !== null}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-white">
@@ -121,10 +143,10 @@ export const FormLink = ({ user }: FormLinkProps) => {
                     {...field}
                   />
                 </FormControl>
-                <CustomButton onClick={randomShort}>Randomize</CustomButton>
+                <CustomButton onClick={randomShort} disabled={link !== null}>Randomize</CustomButton>
               </div>
               <FormDescription>
-                https://minlink.vercel.app/s/{form.getValues().shortUrl}
+                https://minlink.vercel.app/s/{form.getValues().shortUrl || link?.url.shortUrl}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -151,7 +173,7 @@ export const FormLink = ({ user }: FormLinkProps) => {
             </FormItem>
           )}
         />
-        <CustomButton disabled={loading} type="submit">Create your Short Url</CustomButton>
+        <CustomButton disabled={loading} type="submit">{link !== null ? 'Update your Short Url' : 'Create your Short Url'}</CustomButton>
       </form>
     </Form>
   );
