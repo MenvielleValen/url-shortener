@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import Url from "../models/url.model";
-import UserUrl from "../models/user-url";
+import { Url } from "../models/url.model";
+import { UserUrl } from "../models/user-url";
 import { connectToDB } from "../mongoose";
 
 export const shortUrlExist = async (shortUrl: string): Promise<boolean> => {
@@ -36,13 +36,13 @@ export async function createUrl(
       userEmail,
       url: createModel.id,
       description: description,
-    })
+    });
 
     const createUserUrl = await userUrl.save();
 
     revalidatePath(pathname);
 
-    return userUrl;
+    return true;
   } catch (error) {
     throw error;
   }
