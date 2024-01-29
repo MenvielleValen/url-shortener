@@ -1,5 +1,4 @@
 import { ButtonLink } from "@/components/ButtonLink";
-import { CreateUrl } from "@/components/CreateUrl";
 import { getServerSession } from "next-auth";
 import { IoIosLink } from "react-icons/io";
 import { authOptions } from "./utils/auth";
@@ -26,7 +25,6 @@ export default async function Home() {
       <div>
         <ButtonLink href={session ? "/dashboard" : "/auth"}>Getting started 🚀</ButtonLink>
       </div>
-      {/* <CreateUrl/> */}
       {
         session && (<p className="text-white text-center">Welcome <span className="font-bold text-indigo-400">{session.user?.name?.split(' ')[0]}</span></p>)
       }
