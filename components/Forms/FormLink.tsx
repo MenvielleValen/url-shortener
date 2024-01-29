@@ -146,7 +146,7 @@ export const FormLink = ({ user, link}: FormLinkProps) => {
                 <CustomButton onClick={randomShort} disabled={link !== null}>Randomize</CustomButton>
               </div>
               <FormDescription>
-                https://minlink.vercel.app/s/{form.getValues().shortUrl || link?.url.shortUrl}
+                https://minlink.vercel.app/s/{form.getValues().shortUrl?.toLowerCase() || link?.url.shortUrl?.toLowerCase()}
               </FormDescription>
               <FormMessage />
             </FormItem>
