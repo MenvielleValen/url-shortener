@@ -77,14 +77,14 @@ export const FormLink = ({ user, link}: FormLinkProps) => {
 
     setLoading(true);
 
-    const existShort = await shortUrlExist(shortUrl);
+    const existShort = await shortUrlExist(shortUrl as string);
 
     if(existShort){
         form.setError('shortUrl', {message: 'This short url already exist, try another or select random'});
         return;
     }
 
-    await createUrl(longUrl, shortUrl, description, userEmail, pathname);
+    await createUrl(longUrl, shortUrl as string, description, userEmail, pathname);
 
     setLoading(false);
 
