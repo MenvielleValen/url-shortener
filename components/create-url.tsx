@@ -15,7 +15,7 @@ export const CreateUrl = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await createUrl(longUrl);
-    setShortUrl(`${window.location.href}short/${res}`);
+    setShortUrl(`${window.location.href}s/${res}`);
   };
 
   return (
