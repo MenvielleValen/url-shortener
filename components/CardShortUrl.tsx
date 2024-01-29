@@ -25,11 +25,11 @@ export const CardShortUrl = ({ userUrl }: CardShortUrlProps) => {
     <Card className="flex flex-col overflow-hidden text-ellipsis text-nowrap justify-between rounded-lg border border-indigo-400 bg-midnight transition-all hover:shadow-lg">
       <CardHeader>
         <CardTitle className="text-white flex items-center justify-between">
-          <div className="flex gap-3 ">
-            /s/{userUrl.url.shortUrl}{" "}
+          <div className="flex gap-3 items-center">
+            /s/{userUrl.url.shortUrl}
             <CoppyButton
               text={`${process.env.URL_BASE}/s/${userUrl.url.shortUrl}`}
-            />{" "}
+            />
           </div>
           <CardShortUrlOptions id={userUrl.id} />
         </CardTitle>

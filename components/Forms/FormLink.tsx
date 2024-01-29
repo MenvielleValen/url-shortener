@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { Base62Converter } from "@/lib/base62";
 import { Textarea } from "../ui/textarea";
-import { createUrl, shortUrlExist } from "@/lib/actions/url.actions";
+import { createUrl, shortUrlExist, updateUrl } from "@/lib/actions/url.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -59,7 +59,8 @@ export const FormLink = ({ user, link}: FormLinkProps) => {
   const onSubmit = async (values: z.infer<typeof UrlSchema>) => {
 
     if(link !== null){
-
+      await updateUrl(link.id, values.longUrl, values.description, values.userEmail, pathname);
+      router.push("/dashboard");
     }
     else{
       newShortUrl(values);

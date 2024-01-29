@@ -47,3 +47,32 @@ export async function createUrl(
     throw error;
   }
 }
+
+export async function updateUrl(
+  userUrlId: string,
+  longUrl: string,
+  description: string,
+  userEmail: string,
+  pathname: string
+): Promise<any> {
+  try {
+    await connectToDB();
+
+    const userUrl = await UserUrl.findByIdAndUpdate(userUrlId, {
+      description
+    });
+
+
+    //TODO validate
+
+    await Url.findByIdAndUpdate(userUrl.url, {
+      longUrl
+    });
+
+    revalidatePath(pathname);
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
