@@ -7,8 +7,8 @@ const userUrlSchema = new mongoose.Schema({
         unique: false
     },
     url:{
-        type: mongoose.Types.ObjectId,
-        ref: 'Url',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'url',
         required: true,
         unique: false
     },
@@ -19,6 +19,6 @@ const userUrlSchema = new mongoose.Schema({
 });
 
 
-const UserUrl = mongoose.models.UserUrl || mongoose.model('UserUrl', userUrlSchema);
+const UserUrl = mongoose.models?.userurl || mongoose.model('userurl', userUrlSchema);
 
 export default UserUrl;

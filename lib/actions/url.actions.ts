@@ -6,7 +6,7 @@ import UserUrl from "../models/user-url";
 import { connectToDB } from "../mongoose";
 
 export const shortUrlExist = async (shortUrl: string): Promise<boolean> => {
-  connectToDB();
+  await connectToDB();
   try {
     const exist = await Url.findOne({ shortUrl });
     return Promise.resolve(exist !== null);
@@ -23,7 +23,7 @@ export async function createUrl(
   pathname: string
 ): Promise<any> {
   try {
-    connectToDB();
+    await connectToDB();
 
     const url = new Url({
       longUrl,
