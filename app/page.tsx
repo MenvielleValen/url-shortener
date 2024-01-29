@@ -1,10 +1,17 @@
-import { ButtonLink } from "@/components/button-link";
-import { CreateUrl } from "@/components/create-url";
+import { ButtonLink } from "@/components/ButtonLink";
+import { CreateUrl } from "@/components/CreateUrl";
+import { getServerSession } from "next-auth";
 import { IoIosLink } from "react-icons/io";
+import { authOptions } from "./utils/auth";
 
-export default function Home() {
+export default async function Home() {
+
+  const session = await getServerSession(authOptions);
+
+  console.log(session)
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-2 gap-3">
+    <section className="flex flex-col gap-4 md:w-1/4 mx-auto h-[100vh] items-center justify-center">
       <div className="flex flex-col justify-center items-center">
         <div className="flex items-center">
           <h1 className="text-white text-4xl font-bold hover:select-none">
@@ -17,9 +24,12 @@ export default function Home() {
         </p>
       </div>
       <div>
-        <ButtonLink href="/auth">Getting started 🚀</ButtonLink>
+        <ButtonLink href={session ? "/dashboard" : "/auth"}>Getting started 🚀</ButtonLink>
       </div>
       {/* <CreateUrl/> */}
-    </main>
+      {
+        session && (<p className="text-white text-center">Welcome <span className="font-bold text-indigo-400">{session.user?.name?.split(' ')[0]}</span></p>)
+      }
+    </section>
   );
 }

@@ -1,10 +1,16 @@
+import { authOptions } from "@/app/utils/auth";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import React from "react";
+import { LogoutButton } from "./LogoutButton";
+import Image from "next/image";
 
-export const Topbar = () => {
+export const Topbar = async () => {
+  const session = await getServerSession(authOptions);
+
   return (
-    <nav className="absolute top-0 z-40 w-full py-4 bg-midnight duration-300">
-      <div className="flex container pl-4 pr-4 md:pl-0 md:pr-0 items-center justify-between mx-auto">
+    <nav className="w-full flex py-4">
+      <div className="flex justify-between w-full items-center">
         <Link
           href="/"
           className="text-white font-bold text-2xl hover:opacity-65 transition-opacity"
@@ -12,12 +18,22 @@ export const Topbar = () => {
           m<span className="text-indigo-400 text-3xl">L</span>
         </Link>
 
-        <Link
-          href="/auth"
-          className="text-white hover:opacity-65 transition-opacity"
-        >
-          Sign in
-        </Link>
+        {session ? (
+          <div className="flex gap-2 items-center">
+            <Image className="rounded-full" src={session.user?.image || ''} width={30} height={30} alt={`Avatar ${session.user?.name}`}/>
+            <p className="text-white hover:select-none">
+              {session.user?.name?.split(' ')[0]}
+            </p>
+            <LogoutButton />
+            </div>
+        ) : (
+          <Link
+            href="/auth"
+            className="text-white hover:opacity-65 transition-opacity"
+          >
+            Sign in
+          </Link>
+        )}
       </div>
     </nav>
   );
