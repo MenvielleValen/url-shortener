@@ -1,4 +1,4 @@
-import { Url } from "@/lib/models/url.model";
+import Url from "@/lib/models/url.model";
 import { connectToDB } from "@/lib/mongoose";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
