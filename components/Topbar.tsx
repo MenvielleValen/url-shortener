@@ -13,11 +13,10 @@ export const Topbar = async () => {
       <div className="flex justify-between w-full items-center">
         <Link
           href="/"
-          className="text-white font-bold text-2xl hover:opacity-65 transition-opacity"
+          className="text-white font-bold text-2xl hover:opacity-65 transition-opacity relative"
         >
           m<span className="text-indigo-400 text-3xl">L</span>
         </Link>
-
         {session ? (
           <div className="flex gap-2 items-center">
             <Image className="rounded-full" src={session?.user?.image || defaultAvatar} width={30} height={30} alt={`Avatar ${session.user?.name}`}/>
