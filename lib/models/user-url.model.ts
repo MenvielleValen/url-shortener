@@ -15,6 +15,13 @@ const userUrlSchema = new mongoose.Schema({
     description: {
         type: String,
         default: ''
+    },
+    clickCounter: {
+        type: Number,
+        default: 0
+    },
+    lastClickDate: {
+        type: Date,
     }
 });
 

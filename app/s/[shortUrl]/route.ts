@@ -1,15 +1,18 @@
 import Url from "@/lib/models/url.model";
+import UserUrl from "@/lib/models/user-url.model";
 import { connectToDB } from "@/lib/mongoose";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-async function handleAnalytics(longUrl: string): Promise<void> {
+async function handleAnalytics(urlId: string): Promise<void> {
   // Aquí puedes realizar el procesamiento de análisis
   // Por ejemplo, puedes guardar información sobre la visita, como la fecha, la IP del cliente, etc.
-  console.log(`Procesando análisis para la URL: ${longUrl}`);
+  console.log(`Procesando análisis para la URL: ${urlId}`);
+  const getUserUrl = await UserUrl.findOneAndUpdate({url: urlId}, {$inc: {'clickCounter': 1}, lastClickDate: Date.now()})
+
+  console.log(getUserUrl);
   // Simulando un retraso para propósitos de demostración
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  console.log(`Análisis completado para la URL: ${longUrl}`);
+  console.log(`Análisis completado para la URL: ${urlId}`);
 }
 
 export async function GET(
@@ -18,8 +21,7 @@ export async function GET(
 ) {
   connectToDB();
   const shortUrl = params.shortUrl;
-  const reqHeader = headers();
-  const host = reqHeader.get("host");
+  const host = "https://minlink.vercel.app/";
 
   if (!shortUrl) {
     if (host) {
@@ -41,7 +43,7 @@ export async function GET(
     const response = NextResponse.redirect(longUrl);
 
     // Procesar análisis de manera asíncrona
-    handleAnalytics(longUrl).catch((error) => {
+    handleAnalytics(getLongUrl.id).catch((error) => {
       console.error(
         `Error al procesar análisis para la URL: ${longUrl}`,
         error
@@ -51,6 +53,6 @@ export async function GET(
     return response;
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Invalid Url" });
+    return NextResponse.redirect(host);
   }
 }

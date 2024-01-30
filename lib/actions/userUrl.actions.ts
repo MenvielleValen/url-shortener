@@ -1,7 +1,7 @@
 "use server";
 
 import Url from "../models/url.model";
-import UserUrl from "../models/user-url";
+import UserUrl from "../models/user-url.model";
 import { connectToDB } from "../mongoose";
 
 export const findUserUrls = async (userEmail: string): Promise<any[]> => {

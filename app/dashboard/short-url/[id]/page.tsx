@@ -4,6 +4,7 @@ import { redirect} from "next/navigation";
 import { ButtonLink } from "@/components/ButtonLink";
 import { findUserUrlById } from "@/lib/actions/userUrl.actions";
 import { FormLink } from "@/components/Forms/FormLink";
+import { MdModeEdit } from "react-icons/md";
 
 export default async function EditPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
@@ -27,11 +28,14 @@ export default async function EditPage({ params }: { params: { id: string } }) {
    return (
     <>
       <div className="flex justify-between items-center">
-        <h2 className="text-white text-2xl mt-3 font-bold">Edit Link</h2>
+      <div className="flex gap-2 text-white items-center">
+          <MdModeEdit size={28}/>
+          <h2 className="text-white text-2xl font-bold">Edit Link</h2>
+        </div>
         <ButtonLink href={"/dashboard"}>Cancel</ButtonLink>
       </div>
       <hr className="opacity-55"/>
-      <div className="flex  p-2  h-[100vh]">
+      <div className="flex  p-2  h-[100vh] justify-center items-center">
         { link !== null &&
             <FormLink link={transformLink} user={session.user}/>
         }

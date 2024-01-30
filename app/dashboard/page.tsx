@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { CardShortUrl } from "@/components/CardShortUrl";
 import { findUserUrls } from "@/lib/actions/userUrl.actions";
 import { ButtonLink } from "@/components/ButtonLink";
+import { MdOutlineDashboard } from "react-icons/md";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -21,11 +22,15 @@ export default async function DashboardPage() {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h2 className="text-white text-2xl mt-3 font-bold">Dashboard</h2>
+        <div className="flex gap-2 text-white items-center">
+          <MdOutlineDashboard size={28} />
+          <h2 className="text-white text-2xl font-bold">Dashboard</h2>
+        </div>
         <ButtonLink href={"/dashboard/short-url/create"}>
           Create new link
         </ButtonLink>
       </div>
+
       <hr className="opacity-55" />
       {userUrls.length === 0 ? (
         <div className="flex justify-center items-center flex-col gap-4">

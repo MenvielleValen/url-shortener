@@ -21,6 +21,7 @@ import { createUrl, shortUrlExist, updateUserUrl } from "@/lib/actions/url.actio
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
+import { IoWarningOutline } from "react-icons/io5";
 
 interface FormLinkProps {
   user: {
@@ -222,7 +223,10 @@ export const FormLink = ({ user, link }: FormLinkProps) => {
           )}
         />
         <CustomButton disabled={loading} type="submit">
-          {link !== null ? "Update your Short Url" : "Create your Short Url"}
+          <div className="flex gap-3 justify-between">
+            {link !== null ? "Update your Short Url" : "Create your Short Url"}
+            {link !== null && <IoWarningOutline size={25}/>}
+          </div>
         </CustomButton>
       </form>
     </Form>

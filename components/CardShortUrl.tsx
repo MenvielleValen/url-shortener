@@ -1,6 +1,5 @@
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -16,6 +15,8 @@ interface CardShortUrlProps {
       shortUrl: string;
     };
     description?: string;
+    clickCounter?: number;
+    lastClickDate?: string;
   };
 }
 
@@ -32,15 +33,21 @@ export const CardShortUrl = ({ userUrl }: CardShortUrlProps) => {
           </div>
           <CardShortUrlOptions id={userUrl.id} />
         </CardTitle>
-        <CardDescription className="max-w-[250px] text-ellipsis overflow-hidden">
-          {userUrl.url.longUrl}
+        <CardDescription className="max-w-[250px] text-ellipsis overflow-hidden flex flex-col">
+          <div>
+            {userUrl.url.longUrl}
+            <p className="text-indigo-400">
+              Clicks in short link: {userUrl?.clickCounter || 0}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-gray-400 max-w-[400px] text-ellipsis overflow-hidden">
+              {userUrl.description || "No description. "}
+            </p>
+          </div>
         </CardDescription>
       </CardHeader>
-      <CardContent className="p-3">
-        <p className="text-gray-400 max-w-[400px] text-ellipsis overflow-hidden">
-          {userUrl.description || "No description. "}
-        </p>
-      </CardContent>
     </Card>
   );
 };
