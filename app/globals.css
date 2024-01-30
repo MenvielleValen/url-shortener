@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Estilos para el scrollbar en navegadores WebKit (como Chrome, Safari) */
+/* Puedes personalizar los estilos según tus preferencias */
+
+/* Cambia el color del track (fondo) del scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Anchura del scrollbar */
+  background-color: #f1f1f1; /* Color de fondo del track */
+}
+
+/* Cambia el color del thumb (barra) del scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #3d369b; /* Color de la barra del scrollbar */
+  border-radius: 0px; /* Borde redondeado para la barra del scrollbar */
+}
+
+/* Cambia el color del thumb (barra) del scrollbar cuando está en hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #443da7; /* Cambia el color de la barra cuando se pasa el mouse sobre ella */
+}

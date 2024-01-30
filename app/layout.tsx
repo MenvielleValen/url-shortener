@@ -19,7 +19,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="relative flex flex-col min-h-screen bg-indigo-950 container mx-auto px-4 md:px-0">
+      <body className="relative flex flex-col min-h-screen bg-indigo-950 mx-auto px-4">
         <Topbar />
         <main className="flex flex-col justify-center max-h-[90vh] gap-3 w-full">
           {children}

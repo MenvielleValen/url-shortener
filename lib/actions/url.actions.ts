@@ -11,6 +11,7 @@ export const shortUrlExist = async (shortUrl: string): Promise<boolean> => {
     const exist = await Url.findOne({ shortUrl });
     return Promise.resolve(exist !== null);
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -38,17 +39,18 @@ export async function createUrl(
       description: description,
     });
 
-    const createUserUrl = await userUrl.save();
+    await userUrl.save();
 
     revalidatePath(pathname);
 
     return true;
   } catch (error) {
+    console.error(error);
     throw error;
   }
 }
 
-export async function updateUrl(
+export async function updateUserUrl(
   userUrlId: string,
   longUrl: string,
   description: string,
@@ -59,20 +61,42 @@ export async function updateUrl(
     await connectToDB();
 
     const userUrl = await UserUrl.findByIdAndUpdate(userUrlId, {
-      description
+      description,
     });
-
 
     //TODO validate
 
     await Url.findByIdAndUpdate(userUrl.url, {
-      longUrl
+      longUrl,
     });
 
     revalidatePath(pathname);
 
     return true;
   } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function deleteUserUrl(
+  userUrlId: string,
+  pathname: string
+): Promise<any> {
+  try {
+    await connectToDB();
+
+    const userUrl = await UserUrl.findByIdAndDelete(userUrlId);
+
+    //TODO validate
+
+    await Url.findByIdAndDelete(userUrl.url);
+
+    revalidatePath(pathname);
+
+    return true;
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 }

@@ -20,7 +20,7 @@ export default async function Home() {
         </p>
       </div>
       <div>
-        <ButtonLink href={session ? "/dashboard" : "/auth"}>Getting started 🚀</ButtonLink>
+        <ButtonLink href={session ? "/dashboard" : "/auth"}>{session ? "My dashboard ✈️" : "Getting started 🚀"}</ButtonLink>
       </div>
       {
         session && (<p className="text-white text-center">Welcome <span className="font-bold text-indigo-400">{session.user?.name?.split(' ')[0]}</span></p>)

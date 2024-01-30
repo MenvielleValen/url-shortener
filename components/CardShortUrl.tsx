@@ -5,13 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FaRegCopy } from "react-icons/fa6";
 import { CoppyButton } from "./CoppyButton";
 import { CardShortUrlOptions } from "./CardShortUrlOptions";
 
 interface CardShortUrlProps {
   userUrl: {
-    id: string,
+    id: string;
     url: {
       longUrl: string;
       shortUrl: string;
@@ -22,8 +21,8 @@ interface CardShortUrlProps {
 
 export const CardShortUrl = ({ userUrl }: CardShortUrlProps) => {
   return (
-    <Card className="flex flex-col overflow-hidden text-ellipsis text-nowrap justify-between rounded-lg border border-indigo-400 bg-midnight transition-all hover:shadow-lg">
-      <CardHeader>
+    <Card className="flex flex-col overflow-hidden text-ellipsis text-nowrap justify-between rounded-lg border border-indigo-400 bg-midnight transition-all hover:shadow-lg h-[150px] w-[425px]">
+      <CardHeader className="p-3">
         <CardTitle className="text-white flex items-center justify-between">
           <div className="flex gap-3 items-center">
             /s/{userUrl.url.shortUrl}
@@ -33,11 +32,13 @@ export const CardShortUrl = ({ userUrl }: CardShortUrlProps) => {
           </div>
           <CardShortUrlOptions id={userUrl.id} />
         </CardTitle>
-        <CardDescription>{userUrl.url.longUrl}</CardDescription>
+        <CardDescription className="max-w-[250px] text-ellipsis overflow-hidden">
+          {userUrl.url.longUrl}
+        </CardDescription>
       </CardHeader>
-      <CardContent>
-        <p className="text-gray-400">
-          {userUrl.description || "No description."}
+      <CardContent className="p-3">
+        <p className="text-gray-400 max-w-[400px] text-ellipsis overflow-hidden">
+          {userUrl.description || "No description. "}
         </p>
       </CardContent>
     </Card>

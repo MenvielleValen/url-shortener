@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UrlSchema } from "@/lib/validations/url";
 import { Button as CustomButton } from "@/components/Button";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,9 +17,10 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { Base62Converter } from "@/lib/base62";
 import { Textarea } from "../ui/textarea";
-import { createUrl, shortUrlExist, updateUrl } from "@/lib/actions/url.actions";
+import { createUrl, shortUrlExist, updateUserUrl } from "@/lib/actions/url.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { useToast } from "../ui/use-toast";
 
 interface FormLinkProps {
   user: {
@@ -35,14 +35,15 @@ interface FormLinkProps {
       id: string;
       shortUrl: string;
       longUrl: string;
-    }
+    };
     description?: string;
-  } | null
+  } | null;
 }
 
-export const FormLink = ({ user, link}: FormLinkProps) => {
+export const FormLink = ({ user, link }: FormLinkProps) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { toast } = useToast();
 
   const [loading, setLoading] = useState(false);
 
@@ -57,15 +58,36 @@ export const FormLink = ({ user, link}: FormLinkProps) => {
   });
 
   const onSubmit = async (values: z.infer<typeof UrlSchema>) => {
-
-    if(link !== null){
-      await updateUrl(link.id, values.longUrl, values.description, values.userEmail, pathname);
-      router.push("/dashboard");
-    }
-    else{
+    if (link !== null) {
+      updateShortUrl(values);
+    } else {
       newShortUrl(values);
     }
-    
+  };
+
+  const updateShortUrl = async ({
+    longUrl,
+    description,
+    userEmail,
+  }: z.infer<typeof UrlSchema>) => {
+    try {
+      setLoading(true);
+
+      await updateUserUrl(link?.id!, longUrl, description, userEmail, pathname);
+
+      toast({
+        title: "Update successful!",
+      });
+
+      router.push("/dashboard");
+    } catch (error) {
+      toast({
+        title: "Error updating item. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const newShortUrl = async ({
@@ -74,31 +96,49 @@ export const FormLink = ({ user, link}: FormLinkProps) => {
     description,
     userEmail,
   }: z.infer<typeof UrlSchema>) => {
+    try {
+      setLoading(true);
 
-    setLoading(true);
+      const existShort = await shortUrlExist(shortUrl as string);
 
-    const existShort = await shortUrlExist(shortUrl as string);
-
-    if(existShort){
-        form.setError('shortUrl', {message: 'This short url already exist, try another or select random'});
+      if (existShort) {
+        form.setError("shortUrl", {
+          message: "This short url already exist, try another or select random",
+        });
         return;
+      }
+
+      await createUrl(
+        longUrl,
+        shortUrl as string,
+        description,
+        userEmail,
+        pathname
+      );
+
+      toast({
+        title: "Creation successful!",
+      });
+
+      router.push("/dashboard");
+    } catch (error) {
+      toast({
+        title: "Error deleting item. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
-
-    await createUrl(longUrl, shortUrl as string, description, userEmail, pathname);
-
-    setLoading(false);
-
-    router.push("/dashboard");
   };
 
-  const randomShort = async(): Promise<void> => {
+  const randomShort = async (): Promise<void> => {
     setLoading(true);
 
     const shortUrl = Base62Converter.toBase62();
     const existShort = await shortUrlExist(shortUrl);
 
-    if(existShort){
-        return randomShort();
+    if (existShort) {
+      return randomShort();
     }
 
     form.setValue("shortUrl", shortUrl);
@@ -108,7 +148,10 @@ export const FormLink = ({ user, link}: FormLinkProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 md:w-1/2 w-full">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 md:w-1/2 w-full"
+      >
         <FormField
           control={form.control}
           name="longUrl"
@@ -144,10 +187,14 @@ export const FormLink = ({ user, link}: FormLinkProps) => {
                     {...field}
                   />
                 </FormControl>
-                <CustomButton onClick={randomShort} disabled={link !== null}>Randomize</CustomButton>
+                <CustomButton onClick={randomShort} disabled={link !== null}>
+                  Randomize
+                </CustomButton>
               </div>
               <FormDescription>
-                https://minlink.vercel.app/s/{form.getValues().shortUrl?.toLowerCase() || link?.url.shortUrl?.toLowerCase()}
+                https://minlink.vercel.app/s/
+                {form.getValues().shortUrl?.toLowerCase() ||
+                  link?.url.shortUrl?.toLowerCase()}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -174,7 +221,9 @@ export const FormLink = ({ user, link}: FormLinkProps) => {
             </FormItem>
           )}
         />
-        <CustomButton disabled={loading} type="submit">{link !== null ? 'Update your Short Url' : 'Create your Short Url'}</CustomButton>
+        <CustomButton disabled={loading} type="submit">
+          {link !== null ? "Update your Short Url" : "Create your Short Url"}
+        </CustomButton>
       </form>
     </Form>
   );
