@@ -16,7 +16,7 @@ export default async function AuthPage() {
   return (
     <section className='md:1/4 mx-auto flex flex-col gap-3 h-[100vh] items-center justify-center'>
         <SignInButtonWithProvider provider='github'/>
-        <SignInButtonWithProvider provider='google'/>
+        <SignInButtonWithProvider provider='gitlab'/>
     </section>
   )
 }

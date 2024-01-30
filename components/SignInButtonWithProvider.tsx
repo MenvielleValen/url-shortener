@@ -1,13 +1,13 @@
 "use client"
 
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaGitlab } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { Button } from "./Button";
 import { useState } from "react";
 
 interface SignInButtonWithProviderProps{
-    provider: 'github' | 'google' | 'email',
+    provider: 'github' | 'gitlab' | 'email',
 }
 
 export const SignInButtonWithProvider = ({provider}: SignInButtonWithProviderProps) => {
@@ -19,9 +19,9 @@ export const SignInButtonWithProvider = ({provider}: SignInButtonWithProviderPro
             label: 'Sign in with GitHub',
             icon: <FaGithub/>
         },
-        google: {
-            label: 'Sign in with Google',
-            icon: <FaGoogle/>
+        gitlab: {
+            label: 'Sign in with Gitlab',
+            icon: <FaGitlab/>
         },
         email:{
             label: 'Sign in with Google',
@@ -38,7 +38,7 @@ export const SignInButtonWithProvider = ({provider}: SignInButtonWithProviderPro
         });
         setLoading(false);
     }}>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center min-w-[200px] justify-center">
             {providersConfig[provider].icon}{providersConfig[provider].label}
         </div>
     </Button>
