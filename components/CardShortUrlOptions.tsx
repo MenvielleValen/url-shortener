@@ -6,13 +6,11 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { SlOptionsVertical } from "react-icons/sl";
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
-import { TfiDashboard } from "react-icons/tfi";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { deleteUserUrl } from "@/lib/actions/url.actions";
@@ -57,11 +55,6 @@ export const CardShortUrlOptions = ({ id }: { id: string }) => {
               <SlOptionsVertical /> Options
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem className="flex justify-between">
-                Panel
-                <TfiDashboard size={18} />
-              </MenubarItem>
-              <MenubarSeparator />
               <Link href={`dashboard/short-url/${id}`}>
                 <MenubarItem className="flex justify-between">
                   Edit
@@ -70,27 +63,32 @@ export const CardShortUrlOptions = ({ id }: { id: string }) => {
               </Link>
               <MenubarSeparator />
               <AlertDialogTrigger asChild>
-              <MenubarItem
-                className="flex justify-between text-red-600 focus:text-red-600"
-              >
-                Delete <MdDeleteOutline size={18} />
-              </MenubarItem>
+                <MenubarItem className="flex justify-between text-red-600 focus:text-red-600">
+                  Delete <MdDeleteOutline size={18} />
+                </MenubarItem>
               </AlertDialogTrigger>
             </MenubarContent>
           </MenubarMenu>
         </Menubar>
 
-     
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure you want to delete this item?</AlertDialogTitle>
+            <AlertDialogTitle>
+              Are you sure you want to delete this item?
+            </AlertDialogTitle>
             <AlertDialogDescription className="bg-red-300 p-4 rounded-md text-gray-700">
-            This action is irreversible and will permanently remove associated data.
+              This action is irreversible and will permanently remove associated
+              data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={deleteCard} className="bg-red-600 hover:bg-red-700">Delete</AlertDialogAction>
+            <AlertDialogAction
+              onClick={deleteCard}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

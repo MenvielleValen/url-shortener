@@ -17,7 +17,11 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { Base62Converter } from "@/lib/base62";
 import { Textarea } from "../ui/textarea";
-import { createUrl, shortUrlExist, updateUserUrl } from "@/lib/actions/url.actions";
+import {
+  createUrl,
+  shortUrlExist,
+  updateUserUrl,
+} from "@/lib/actions/url.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
@@ -176,15 +180,13 @@ export const FormLink = ({ user, link }: FormLinkProps) => {
           disabled={link !== null}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white">
-                Custom short (max 8):
-              </FormLabel>
+              <FormLabel className="text-white">Custom short:</FormLabel>
               <div className="flex gap-2">
                 <FormControl>
                   <Input
                     className="text-indigo-500"
                     placeholder="Custom short"
-                    maxLength={8}
+                    maxLength={15}
                     {...field}
                   />
                 </FormControl>
@@ -225,7 +227,7 @@ export const FormLink = ({ user, link }: FormLinkProps) => {
         <CustomButton disabled={loading} type="submit">
           <div className="flex gap-3 justify-between">
             {link !== null ? "Update your Short Url" : "Create your Short Url"}
-            {link !== null && <IoWarningOutline size={25}/>}
+            {link !== null && <IoWarningOutline size={25} />}
           </div>
         </CustomButton>
       </form>
