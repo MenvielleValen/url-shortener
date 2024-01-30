@@ -2,6 +2,11 @@ export class Base62Converter {
   static base62Chars: string =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+  /**
+   * Convert decimal to base 62
+   * @param num if param is null so getting random float
+   * @returns string base64
+   */
   static toBase62(num: number | null = null): string {
 
     if(num === null){

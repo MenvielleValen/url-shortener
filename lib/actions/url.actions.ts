@@ -64,8 +64,6 @@ export async function updateUserUrl(
       description,
     });
 
-    //TODO validate
-
     await Url.findByIdAndUpdate(userUrl.url, {
       longUrl,
     });
@@ -85,15 +83,9 @@ export async function deleteUserUrl(
 ): Promise<any> {
   try {
     await connectToDB();
-
     const userUrl = await UserUrl.findByIdAndDelete(userUrlId);
-
-    //TODO validate
-
     await Url.findByIdAndDelete(userUrl.url);
-
     revalidatePath(pathname);
-
     return true;
   } catch (error) {
     console.error(error);

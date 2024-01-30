@@ -5,14 +5,14 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 async function handleAnalytics(urlId: string): Promise<void> {
-  // Aquí puedes realizar el procesamiento de análisis
-  // Por ejemplo, puedes guardar información sobre la visita, como la fecha, la IP del cliente, etc.
-  console.log(`Procesando análisis para la URL: ${urlId}`);
-  const getUserUrl = await UserUrl.findOneAndUpdate({url: urlId}, {$inc: {'clickCounter': 1}, lastClickDate: Date.now()})
+  try {
+    console.log(`Procesando análisis para la URL: ${urlId}`);
+    await UserUrl.findOneAndUpdate({url: urlId}, {$inc: {'clickCounter': 1}, lastClickDate: Date.now()})
+    console.log(`Análisis completado para la URL: ${urlId}`);
+  } catch (error: any) {
+    console.error("handleAnalytics", error.message)
+  }
 
-  console.log(getUserUrl);
-  // Simulando un retraso para propósitos de demostración
-  console.log(`Análisis completado para la URL: ${urlId}`);
 }
 
 export async function GET(
@@ -51,8 +51,8 @@ export async function GET(
     });
 
     return response;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error("error while getting the longurl", error.message)
     return NextResponse.redirect(host);
   }
 }

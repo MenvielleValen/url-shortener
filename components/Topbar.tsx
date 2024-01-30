@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { LogoutButton } from "./LogoutButton";
 import Image from "next/image";
-
+import defaultAvatar from '../public/avatar.png'
 export const Topbar = async () => {
   const session = await getServerSession(authOptions);
 
@@ -20,7 +20,7 @@ export const Topbar = async () => {
 
         {session ? (
           <div className="flex gap-2 items-center">
-            <Image className="rounded-full" src={session.user?.image || ''} width={30} height={30} alt={`Avatar ${session.user?.name}`}/>
+            <Image className="rounded-full" src={session?.user?.image || defaultAvatar} width={30} height={30} alt={`Avatar ${session.user?.name}`}/>
             <p className="text-white hover:select-none">
               {session.user?.name?.split(' ')[0]}
             </p>
