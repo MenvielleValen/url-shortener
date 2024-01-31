@@ -1,6 +1,12 @@
 {
-    "crons": [{
-      "path": "/api/cron",
+  "crons": [
+    {
+      "path": "/api/job-cache",
       "schedule": "0 10 * * *"
-    }]
-  }
+    },
+    {
+        "path": "/api/log-cache",
+        "schedule": "* * * * *"
+    }
+  ]
+}

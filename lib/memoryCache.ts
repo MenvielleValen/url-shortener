@@ -26,7 +26,8 @@ export class MemoryCache {
   }
 
   static resetByDate(){
-    console.log("resetByDate");
+
+    let deleteCount = 0;
     const currentDate = new Date();
     for (const key in this.cacheValues) {
       if (Object.prototype.hasOwnProperty.call(this.cacheValues, key)) {
@@ -35,8 +36,15 @@ export class MemoryCache {
         if (recordDate > currentDate) {
           // Eliminamos el registro
           delete this.cacheValues[key];
+          deleteCount++;
         }
       }
     }
+
+    console.info(`Delete data in caché: ${deleteCount}`)
+  }
+
+  static logCache(){
+    console.info(this.cacheValues);
   }
 }
