@@ -13,20 +13,26 @@ export default async function Home() {
           <h1 className="text-white text-4xl font-bold hover:select-none">
             Min<span className="text-indigo-500 text-5xl">Link</span>
           </h1>
-          <IoIosLink className="text-white text-4xl hover:select-none"/>
+          <IoIosLink className="text-white text-4xl hover:select-none" />
         </div>
         <p className="text-sm text-neutral-300 text-center">
           Create your custom shortened URLs
         </p>
       </div>
       <div className="relative">
-        <ButtonLink href={session ? "/dashboard" : "/auth"}>{session ? "My dashboard ✈️" : "Getting started 🚀"}</ButtonLink>
-        <div className="z-[-1] absolute opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-pulse">
-        </div>
+        <ButtonLink href={session ? "/dashboard" : "/auth"}>
+          {session ? "My dashboard ✈️" : "Getting started 🚀"}
+        </ButtonLink>
+        <div className="z-[-1] absolute opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-pulse"></div>
       </div>
-      {
-        session && (<p className="text-white text-center">Welcome <span className="font-bold text-indigo-400">{session.user?.name?.split(' ')[0]}</span></p>)
-      }
+      {session && (
+        <p className="text-white text-center">
+          Welcome{" "}
+          <span className="font-bold text-indigo-400">
+            {session.user?.name?.split(" ")[0]}
+          </span>
+        </p>
+      )}
     </section>
   );
 }

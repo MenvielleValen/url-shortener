@@ -1,7 +1,7 @@
+import { MemoryCache } from "@/lib/memoryCache";
 import Url from "@/lib/models/url.model";
 import UserUrl from "@/lib/models/user-url.model";
 import { connectToDB } from "@/lib/mongoose";
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 async function handleAnalytics(urlId: string): Promise<void> {
@@ -29,6 +29,11 @@ export async function GET(
     }
   }
 
+  const cacheItem = MemoryCache.getItemValue(shortUrl);
+  if(cacheItem){
+    return NextResponse.redirect(cacheItem);
+  }
+
   try {
     const getLongUrl = await Url.findOne({ shortUrl: shortUrl });
 
@@ -49,6 +54,8 @@ export async function GET(
         error
       );
     });
+
+    MemoryCache.setItem(shortUrl, longUrl);
 
     return response;
   } catch (error: any) {
