@@ -4,6 +4,8 @@ import "./globals.css";
 import { Topbar } from "@/components/Topbar";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +28,7 @@ export default async function RootLayout({
         </main>
         <Footer />
         <Toaster/>
+        <SpeedInsights/>
       </body>
     </html>
   );
