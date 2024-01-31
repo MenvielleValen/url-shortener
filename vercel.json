@@ -6,7 +6,7 @@
     },
     {
         "path": "/api/log-cache",
-        "schedule": "* * * * *"
+        "schedule": "* 11 * * *"
     }
   ]
 }
