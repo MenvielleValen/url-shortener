@@ -8,5 +8,6 @@
         "path": "/api/log-cache",
         "schedule": "* * * * *"
     }
+    
   ]
 }
